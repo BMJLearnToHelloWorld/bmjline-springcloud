@@ -1,0 +1,25 @@
+server:
+  port: 8761
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false #是否将自己注册到Eureka-Server中，默认的为true
+    fetchRegistry: false #是否从Eureka-Server中获取服务注册信息，默认为true
+    serviceUrl:
+#      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+#  server:
+#    waitTimeInMsWhenSyncEmpty: 0
+#    renewalPercentThreshold: 0.49
+
+spring:
+  application:
+    name: eureka-server
+  security:
+    basic:
+      enabled: false
+    user:
+      name: bmj
+      password: 123456

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bmjline.blogserver.mapper.BlogMapper">
+    <resultMap id="BlogResult" type="com.bmjline.blogserver.entity.BlogEntity">
+        <id property="id" column="id"/>
+        <result property="blogName" column="blog_name"/>
+        <result property="blogDescr" column="blog_descr"/>
+        <result property="blogContent" column="blog_content"/>
+        <result property="blogLength" column="blog_length"/>
+        <result property="readingTime" column="reading_time"/>
+        <result property="createdTime" column="created_time"/>
+        <result property="updatedTime" column="updated_time"/>
+        <result property="blogStatus" column="blog_status"/>
+    </resultMap>
+
+    <select id="getBlogDetailById" resultType="BlogResult">
+        select *
+        from t_blog
+        where id = #{blogId}
+    </select>
+</mapper>
