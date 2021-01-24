@@ -5,6 +5,9 @@ import com.bmjline.blogserver.entity.BlogEntity;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author bmj
+ */
 public interface BlogService {
 
     List<Map<String, Object>> queryAllBlog(Map<String, Object> req);

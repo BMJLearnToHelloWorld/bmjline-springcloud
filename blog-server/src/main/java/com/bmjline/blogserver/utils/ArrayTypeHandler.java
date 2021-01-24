@@ -13,6 +13,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * @author bmj
+ */
 @MappedJdbcTypes(JdbcType.ARRAY)
 @MappedTypes(String[].class)
 public class ArrayTypeHandler extends BaseTypeHandler<Object[]> {

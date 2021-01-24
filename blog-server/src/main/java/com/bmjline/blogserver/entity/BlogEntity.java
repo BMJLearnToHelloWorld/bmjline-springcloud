@@ -5,6 +5,9 @@ import com.bmjline.common.entity.BaseEntity;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author bmj
+ */
 public class BlogEntity extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 4267191147545058720L;

@@ -7,19 +7,23 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="blog-server" />
+        <module name="gateway-server" />
         <module name="common" />
         <module name="eureka-server" />
-        <module name="user-server" />
+        <module name="auth-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="target-server" target="1.8" />
+      <module name="user-server" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="auth-server" options="-parameters" />
       <module name="blog-server" options="-parameters" />
       <module name="eureka-server" options="-parameters" />
+      <module name="gateway-server" options="-parameters" />
       <module name="target-server" options="-parameters" />
       <module name="user-server" options="-parameters" />
     </option>

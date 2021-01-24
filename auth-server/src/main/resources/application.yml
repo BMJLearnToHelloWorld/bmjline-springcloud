@@ -1,0 +1,23 @@
+server:
+  port: 8091
+
+spring:
+  application:
+    name: auth-server
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/bmjline_cloud
+    username: bmj
+    password: bmj.123456
+    driver-class-name: org.postgresql.Driver
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+security:
+  login:
+    api: /user/login
+  logout:
+    api: /user/logout

@@ -14,6 +14,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author bmj
+ */
 @Mapper
 @Repository
 public interface BlogMapper {
@@ -67,7 +70,6 @@ public interface BlogMapper {
     @Update("update t_blog set blog_status = '1', published_time = now() where id = #{blogId}")
     void publishBlogById(@Param("blogId") String blogId);
 
-//    @Delete("delete from t_blog where id = #{blogId}")
     @Update("update t_blog set blog_status = '-1', published_time = null where id = #{blogId}")
     void deleteBlogById(@Param("blogId") String blogId);
 

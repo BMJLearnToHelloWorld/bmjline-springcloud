@@ -12,8 +12,9 @@
     <modules>
         <module>common</module>
         <module>eureka-server</module>
-        <module>user-server</module>
+        <module>auth-server</module>
         <module>blog-server</module>
+        <module>gateway-server</module>
     </modules>
 
 </project>
