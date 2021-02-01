@@ -14,10 +14,10 @@ spring:
           uri: lb://blog-server
           predicates:
             - Path=/blog/**
-        - id: user_server
-          uri: lb://user-server
+        - id: admin_server
+          uri: lb://admin-server
           predicates:
-            - Path=/user/**
+            - Path=/admin/**
 
 eureka:
   client:

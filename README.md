@@ -5,7 +5,7 @@
 | No | module name | feature |
 | -- | --| -- |
 | 1 | blog-server | blog admin |
-| 2 | user-server | user admin |
+| 2 | admin-server | user admin |
 
 ## Database
 

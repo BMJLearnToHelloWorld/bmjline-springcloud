@@ -31,7 +31,11 @@ public enum ResultCode implements IErrorCode {
     /**
      * FORBIDDEN
      */
-    FORBIDDEN(403, "forbidden");
+    FORBIDDEN(403, "forbidden"),
+    /**
+     * USER_NOT_FOUND
+     */
+    USER_NOT_EXIST(201,"user not found");
     private long code;
     private String message;
 

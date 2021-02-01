@@ -3,7 +3,7 @@ package com.bmjline.blogserver.service.impl;
 import com.bmjline.blogserver.entity.BlogEntity;
 import com.bmjline.blogserver.mapper.BlogMapper;
 import com.bmjline.blogserver.service.BlogService;
-import com.bmjline.common.utils.ObjectUtil;
+import com.bmjline.common.util.ObjectUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
