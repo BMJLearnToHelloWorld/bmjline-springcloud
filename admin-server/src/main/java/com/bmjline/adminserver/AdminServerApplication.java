@@ -17,11 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableFeignClients
 public class AdminServerApplication {
 
-//    @Bean
-//    public BCryptPasswordEncoder getBcryptPasswordEncoder(){
-//        return new BCryptPasswordEncoder();
-//    }
-
     public static void main(String[] args) {
         SpringApplication.run(AdminServerApplication.class, args);
     }

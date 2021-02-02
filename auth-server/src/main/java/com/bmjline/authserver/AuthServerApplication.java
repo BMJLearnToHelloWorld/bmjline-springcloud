@@ -1,13 +1,13 @@
-package com.bmjline.commonredis;
+package com.bmjline.authserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CommonRedisApplication {
+public class AuthServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CommonRedisApplication.class, args);
+        SpringApplication.run(AuthServerApplication.class, args);
     }
 
 }

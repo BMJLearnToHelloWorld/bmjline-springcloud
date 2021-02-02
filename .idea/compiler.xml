@@ -7,15 +7,15 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="common" />
+        <module name="auth-server" />
         <module name="blog-server" />
         <module name="gateway-server" />
         <module name="admin-server" />
         <module name="eureka-server" />
-        <module name="common-redis" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="auth-server" target="1.8" />
+      <module name="common-redis" target="1.8" />
       <module name="target-server" target="1.8" />
     </bytecodeTargetLevel>
   </component>
