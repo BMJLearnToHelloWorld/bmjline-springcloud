@@ -8,7 +8,10 @@ import com.bmjline.authserver.exception.TokenAuthenticationException;
 import com.bmjline.authserver.util.JwtUtil;
 import com.bmjline.common.api.CommonResult;
 import com.bmjline.common.entity.UserEntity;
-import org.apache.commons.lang3.StringUtils;
+import com.bmjline.common.util.UuidUtil;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author bmj
@@ -27,10 +31,13 @@ import java.util.Map;
 @RequestMapping("/admin")
 public class UserController {
 
+    private final StringRedisTemplate stringRedisTemplate;
+
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, StringRedisTemplate stringRedisTemplate) {
         this.userService = userService;
+        this.stringRedisTemplate = stringRedisTemplate;
     }
 
     @PostMapping("/user/login")
@@ -44,8 +51,10 @@ public class UserController {
         if (BcryptUtil.match(userEntity.getPassword(), userService.getPassByUsername(userEntity.getUsername()))) {
             String token = JwtUtil.generateToken(userId, userId);
             if (StringUtils.isNotEmpty(token)) {
-//                String uuidKey = UuidUtil.generateUuid();
-                resultMap.put("token", token);
+                String uuidKey = UuidUtil.generateUuid();
+                stringRedisTemplate.opsForHash().put(uuidKey, "token", token);
+                stringRedisTemplate.expire(uuidKey, JwtUtil.TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
+                resultMap.put("token", uuidKey);
                 return CommonResult.success(resultMap);
             }
         }
@@ -54,12 +63,16 @@ public class UserController {
 
     @GetMapping("/user/info")
     public CommonResult<UserInfoEntity> userLogin(@RequestHeader("X-Token") String xToken) {
-        String userId = JwtUtil.getUserId(xToken);
+        String token = (String) stringRedisTemplate.opsForHash().get(xToken, "token");
+        if (StringUtils.isEmpty(token)) {
+            return CommonResult.failed("invalid token");
+        }
+        String userId = JwtUtil.getUserId(token);
         if (StringUtils.isEmpty(userId)) {
             return CommonResult.failed("authentication failed");
         }
         try {
-            JwtUtil.verifyToken(xToken, userId);
+            JwtUtil.verifyToken(token, userId);
         } catch (TokenAuthenticationException e) {
             return CommonResult.failed(e.getMessage());
         }
