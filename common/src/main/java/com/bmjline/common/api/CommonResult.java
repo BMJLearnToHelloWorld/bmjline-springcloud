@@ -2,6 +2,7 @@ package com.bmjline.common.api;
 
 /**
  * 通用返回对象
+ * @author bmj
  */
 public class CommonResult<T> {
     private long code;

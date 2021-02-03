@@ -3,6 +3,9 @@ package com.bmjline.common.util;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author bmj
+ */
 public class ObjectUtil {
     public static <T> List<T> castList(Object obj, Class<T> clazz) {
         List<T> result = new ArrayList<T>();

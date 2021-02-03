@@ -16,12 +16,30 @@ import java.util.List;
 @Mapper
 @Repository
 public interface UserMapper {
+    /**
+     * fetch password by username
+     *
+     * @param username username
+     * @return String
+     */
     @Select("select password from t_user where username = #{username}")
     String selectPassByUsername(@Param("username") String username);
 
+    /**
+     * fetch id by username
+     *
+     * @param username username
+     * @return String
+     */
     @Select("select id from t_user where username = #{username}")
     String selectIdByUsername(@Param("username") String username);
 
+    /**
+     * fetch userinfo by userId
+     *
+     * @param userId userId
+     * @return UserInfoEntity
+     */
     @Select("select username, gender, avatar, birthday, email, language, city, status, last_login_time, seq from t_user where id = #{userId}")
     @Results({
             @Result(column = "username", property = "username"),
@@ -37,6 +55,12 @@ public interface UserMapper {
     })
     UserInfoEntity selectUserInfoById(@Param("userId") String userId);
 
+    /**
+     * fetch roles by userId
+     *
+     * @param userId userId
+     * @return List<String>
+     */
     @Select("select trd.role_name from t_user_role tur, t_role_def trd where tur.role_id = trd.id and tur.user_id = #{userId}")
     List<String> selectRolesByUserId(@Param("userId") String userId);
 }

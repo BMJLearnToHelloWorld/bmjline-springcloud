@@ -2,6 +2,7 @@ package com.bmjline.common.api;
 
 /**
  * 枚举了一些常用API操作码
+ * @author bmj
  */
 public enum ResultCode implements IErrorCode {
     /**

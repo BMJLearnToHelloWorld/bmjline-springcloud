@@ -22,7 +22,7 @@ public class JwtUtil {
     /**
      * 生成Token
      *
-     * @param userId  用户标识（不一定是用户名，有可能是用户ID或者手机号什么的）
+     * @param userId    用户标识（不一定是用户名，有可能是用户ID或者手机号什么的）
      * @param secretKey
      * @return
      */
@@ -71,7 +71,7 @@ public class JwtUtil {
      * @return
      */
     public static String getUserId(String token) {
-        DecodedJWT decodedJWT = JWT.decode(token);
-        return decodedJWT.getClaim("userId").asString();
+        DecodedJWT decodedJwt = JWT.decode(token);
+        return decodedJwt.getClaim("userId").asString();
     }
 }

@@ -2,6 +2,9 @@ package com.bmjline.common.entity;
 
 import java.io.Serializable;
 
+/**
+ * @author bmj
+ */
 public class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -3099339865781737775L;
