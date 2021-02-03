@@ -10,7 +10,7 @@ import com.bmjline.common.api.CommonResult;
 import com.bmjline.common.entity.UserEntity;
 import com.bmjline.common.util.UuidUtil;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +40,9 @@ public class UserController {
         this.stringRedisTemplate = stringRedisTemplate;
     }
 
+    @Value("${token.expire}")
+    private long tokenExpireHour;
+
     @PostMapping("/user/login")
     public CommonResult<Map<String, Object>> userLogin(@RequestBody UserEntity userEntity, HttpServletRequest request) {
         String remoteAddr = HttpUtil.getIpAddr(request);
@@ -53,7 +56,7 @@ public class UserController {
             if (StringUtils.isNotEmpty(token)) {
                 String uuidKey = UuidUtil.generateUuid();
                 stringRedisTemplate.opsForHash().put(uuidKey, "token", token);
-                stringRedisTemplate.expire(uuidKey, JwtUtil.TOKEN_EXPIRE_TIME, TimeUnit.MILLISECONDS);
+                stringRedisTemplate.expire(uuidKey, tokenExpireHour, TimeUnit.HOURS);
                 resultMap.put("token", uuidKey);
                 return CommonResult.success(resultMap);
             }
@@ -82,7 +85,11 @@ public class UserController {
     }
 
     @PostMapping("/user/logout")
-    public CommonResult<String> userLogout() {
-        return CommonResult.success("success");
+    public CommonResult<String> userLogout(@RequestHeader("X-Token") String xToken) {
+        if (stringRedisTemplate.delete(xToken)) {
+            return CommonResult.success("delete token success");
+        } else {
+            return CommonResult.failed("delete token failed");
+        }
     }
 }
