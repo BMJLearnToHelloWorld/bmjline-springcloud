@@ -40,3 +40,5 @@ bmjline:
     skip-auth-urls:
       - /admin/user/login
       - /admin/user/logout
+      - /blog/query/published/**
+      - /blog/detail/**

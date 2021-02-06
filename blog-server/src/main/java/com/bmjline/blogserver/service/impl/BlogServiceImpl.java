@@ -22,14 +22,18 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Map<String, Object>> queryAllBlog(Map<String, Object> params) {
-        List<Map<String, Object>> allBlogList = blogMapper.queryAllBlogList(params);
-        return allBlogList;
+    public List<Map<String, Object>> queryAllBlog(Map<String, Object> params) throws Exception {
+        return blogMapper.queryAllBlogList(params);
     }
 
     @Override
     public List<Map<String, Object>> queryConditionedBlog(Map<String, Object> params) throws Exception {
         return blogMapper.queryConditionedBlogList(params);
+    }
+
+    @Override
+    public List<Map<String, Object>> queryPublishedBlog(Integer pageNo) throws Exception {
+        return blogMapper.queryPublishedBlogList(pageNo);
     }
 
     @Override
@@ -44,7 +48,7 @@ public class BlogServiceImpl implements BlogService {
         createBlog(params);
     }
 
-    private String createBlog(Map<String, Object> params) {
+    private String createBlog(Map<String, Object> params) throws Exception {
         String newBlogId = blogMapper.newBlog(params);
         List<String> tagList = ObjectUtil.castList(params.get("blogTag"), String.class);
         for (String tag : tagList) {

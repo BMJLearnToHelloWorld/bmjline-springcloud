@@ -14,8 +14,9 @@ public interface BlogService {
      *
      * @param req req
      * @return List<Map<String, Object>>
+     * @throws Exception exception
      */
-    List<Map<String, Object>> queryAllBlog(Map<String, Object> req);
+    List<Map<String, Object>> queryAllBlog(Map<String, Object> req) throws Exception;
 
     /**
      * fetch blogs by conditions
@@ -25,6 +26,15 @@ public interface BlogService {
      * @throws Exception exception
      */
     List<Map<String, Object>> queryConditionedBlog(Map<String, Object> req) throws Exception;
+
+    /**
+     * fetch blogs by conditions
+     *
+     * @param pageNo pageNo
+     * @return List<Map<String, Object>>
+     * @throws Exception exception
+     */
+    List<Map<String, Object>> queryPublishedBlog(Integer pageNo) throws Exception;
 
     /**
      * fetch blog detail by blogId

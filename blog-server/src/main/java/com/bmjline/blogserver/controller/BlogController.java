@@ -47,6 +47,16 @@ public class BlogController {
         }
     }
 
+    @GetMapping("/query/published/{pageNo}")
+    public CommonResult<List<Map<String, Object>>> queryPublished(@PathVariable Integer pageNo) {
+        try {
+            return CommonResult.success(blogService.queryPublishedBlog(pageNo));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return CommonResult.failed("failed to query blog");
+        }
+    }
+
     @GetMapping("/detail/{blogId}")
     public CommonResult<BlogEntity> detailBlog(@PathVariable String blogId) {
         try {
