@@ -12,7 +12,7 @@
         <result property="readingTime" column="reading_time"/>
         <result property="createdTime" column="created_time"/>
         <result property="updatedTime" column="updated_time"/>
-        <result property="blogStatus" column="blog_status"/>
+        <result property="status" column="blog_status"/>
     </resultMap>
 
     <select id="getBlogDetailById" resultType="BlogResult">

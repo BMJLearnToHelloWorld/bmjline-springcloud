@@ -26,14 +26,15 @@ public interface BlogMapper {
      * @return List<Map<String, Object>>
      * @throws Exception exception
      */
-    @Select("select id, blog_name, blog_descr, updated_time, blog_status, published_time from t_blog order by updated_time desc")
+    @Select("select id, blog_name, blog_descr, updated_time, blog_status, published_time, content_type from t_blog order by updated_time desc")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "blog_name", property = "blogName"),
             @Result(column = "blog_descr", property = "blogDescr"),
             @Result(column = "updated_time", property = "updatedTime"),
             @Result(column = "blog_status", property = "status"),
-            @Result(column = "published_time", property = "publishedTime")
+            @Result(column = "published_time", property = "publishedTime"),
+            @Result(column = "content_type", property = "contentType")
     })
     List<Map<String, Object>> queryAllBlogList(Map<String, Object> params) throws Exception;
 
@@ -44,7 +45,7 @@ public interface BlogMapper {
      * @return List<Map<String, Object>>
      * @throws Exception exception
      */
-    @Select("select id, blog_name, blog_descr, updated_time, blog_status from t_blog where blog_status = #{blogStatus} order by updated_time desc")
+    @Select("select id, blog_name, blog_descr, updated_time, blog_status from t_blog where blog_status = #{status} order by updated_time desc")
     List<Map<String, Object>> queryConditionedBlogList(Map<String, Object> params) throws Exception;
 
     /**
@@ -75,7 +76,8 @@ public interface BlogMapper {
             @Result(column = "created_time", property = "createdTime"),
             @Result(column = "updated_time", property = "updatedTime"),
             @Result(column = "blog_status", property = "status"),
-            @Result(column = "published_time", property = "publishedTime")
+            @Result(column = "published_time", property = "publishedTime"),
+            @Result(column = "content_type", property = "contentType")
     })
     BlogEntity getBlogDetailById(@Param("blogId") String blogId) throws Exception;
 
@@ -115,8 +117,8 @@ public interface BlogMapper {
      * @return String
      * @throws Exception exception
      */
-    @Select("insert into t_blog (blog_name, blog_descr, blog_content, blog_length, reading_time, blog_status) values " +
-            "(#{blogName}, #{blogDescr}, #{blogContent}, #{blogLength}, #{readingTime}, #{blogStatus}) RETURNING id")
+    @Select("insert into t_blog (blog_name, blog_descr, blog_content, blog_length, reading_time, blog_status, content_type) values " +
+            "(#{blogName}, #{blogDescr}, #{blogContent}, #{blogLength}, #{readingTime}, #{status}, #{contentType}) RETURNING id")
     String newBlog(Map<String, Object> params) throws Exception;
 
     /**

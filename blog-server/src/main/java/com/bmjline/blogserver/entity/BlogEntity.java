@@ -19,6 +19,7 @@ public class BlogEntity extends BaseEntity implements Serializable {
     private int blogLength;
     private String readingTime;
     private String publishedTime;
+    private String contentType;
 
     public String getBlogName() {
         return blogName;
@@ -74,5 +75,13 @@ public class BlogEntity extends BaseEntity implements Serializable {
 
     public void setPublishedTime(String publishedTime) {
         this.publishedTime = publishedTime;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 }
