@@ -1,8 +1,10 @@
 package com.bmjline.blogserver.controller;
 
 import com.bmjline.blogserver.entity.BlogEntity;
+import com.bmjline.blogserver.entity.BlogShortViewEntity;
 import com.bmjline.blogserver.service.BlogService;
 import com.bmjline.common.api.CommonResult;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +30,7 @@ public class BlogController {
     }
 
     @PostMapping("/query/all")
-    public CommonResult<List<Map<String, Object>>> queryAllBlog(@RequestBody Map<String, Object> req) {
+    public CommonResult<List<BlogShortViewEntity>> queryAllBlog(@RequestBody Map<String, Object> req) {
         try {
             return CommonResult.success(blogService.queryAllBlog(req));
         } catch (Exception e) {
@@ -47,10 +49,10 @@ public class BlogController {
         }
     }
 
-    @GetMapping("/query/published/{pageNo}")
-    public CommonResult<List<Map<String, Object>>> queryPublished(@PathVariable Integer pageNo) {
+    @GetMapping("/query/published")
+    public CommonResult<List<BlogShortViewEntity>> queryPublished() {
         try {
-            return CommonResult.success(blogService.queryPublishedBlog(pageNo));
+            return CommonResult.success(blogService.queryPublishedBlog(1));
         } catch (Exception e) {
             e.printStackTrace();
             return CommonResult.failed("failed to query blog");

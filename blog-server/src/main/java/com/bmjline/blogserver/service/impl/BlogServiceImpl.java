@@ -1,6 +1,7 @@
 package com.bmjline.blogserver.service.impl;
 
 import com.bmjline.blogserver.entity.BlogEntity;
+import com.bmjline.blogserver.entity.BlogShortViewEntity;
 import com.bmjline.blogserver.mapper.BlogMapper;
 import com.bmjline.blogserver.service.BlogService;
 import com.bmjline.common.util.ObjectUtil;
@@ -22,7 +23,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Map<String, Object>> queryAllBlog(Map<String, Object> params) throws Exception {
+    public List<BlogShortViewEntity> queryAllBlog(Map<String, Object> params) throws Exception {
         return blogMapper.queryAllBlogList(params);
     }
 
@@ -32,8 +33,12 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<Map<String, Object>> queryPublishedBlog(Integer pageNo) throws Exception {
-        return blogMapper.queryPublishedBlogList(pageNo);
+    public List<BlogShortViewEntity> queryPublishedBlog(Integer pageNo) throws Exception {
+        List<BlogShortViewEntity> publishedBlogList = blogMapper.queryPublishedBlogList(pageNo);
+        for (BlogShortViewEntity blogShortViewEntity : publishedBlogList) {
+            blogShortViewEntity.setBlogTag(blogMapper.getBlogTagById(blogShortViewEntity.getId()));
+        }
+        return publishedBlogList;
     }
 
     @Override

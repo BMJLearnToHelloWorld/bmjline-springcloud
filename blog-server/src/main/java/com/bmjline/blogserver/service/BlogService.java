@@ -1,6 +1,7 @@
 package com.bmjline.blogserver.service;
 
 import com.bmjline.blogserver.entity.BlogEntity;
+import com.bmjline.blogserver.entity.BlogShortViewEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public interface BlogService {
      * @return List<Map<String, Object>>
      * @throws Exception exception
      */
-    List<Map<String, Object>> queryAllBlog(Map<String, Object> req) throws Exception;
+    List<BlogShortViewEntity> queryAllBlog(Map<String, Object> req) throws Exception;
 
     /**
      * fetch blogs by conditions
@@ -34,7 +35,7 @@ public interface BlogService {
      * @return List<Map<String, Object>>
      * @throws Exception exception
      */
-    List<Map<String, Object>> queryPublishedBlog(Integer pageNo) throws Exception;
+    List<BlogShortViewEntity> queryPublishedBlog(Integer pageNo) throws Exception;
 
     /**
      * fetch blog detail by blogId

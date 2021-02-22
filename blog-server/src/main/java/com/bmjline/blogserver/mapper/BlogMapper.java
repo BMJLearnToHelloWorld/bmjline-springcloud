@@ -1,6 +1,7 @@
 package com.bmjline.blogserver.mapper;
 
 import com.bmjline.blogserver.entity.BlogEntity;
+import com.bmjline.blogserver.entity.BlogShortViewEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
@@ -36,7 +37,7 @@ public interface BlogMapper {
             @Result(column = "published_time", property = "publishedTime"),
             @Result(column = "content_type", property = "contentType")
     })
-    List<Map<String, Object>> queryAllBlogList(Map<String, Object> params) throws Exception;
+    List<BlogShortViewEntity> queryAllBlogList(Map<String, Object> params) throws Exception;
 
     /**
      * fetch blog list by condition
@@ -55,8 +56,15 @@ public interface BlogMapper {
      * @return List<Map<String, Object>>
      * @throws Exception exception
      */
-    @Select("select id, blog_name, blog_descr, updated_time, blog_status from t_blog where blog_status = '1' order by updated_time desc limit 10 offset 10 * (#{pageNo} - 1)")
-    List<Map<String, Object>> queryPublishedBlogList(Integer pageNo) throws Exception;
+    @Select("select id, blog_name, blog_descr, published_time, content_type from t_blog where blog_status = '1' order by updated_time desc limit 10 offset 10 * (#{pageNo} - 1)")
+    @Results({
+            @Result(column = "id", property = "id"),
+            @Result(column = "blog_name", property = "blogName"),
+            @Result(column = "blog_descr", property = "blogDescr"),
+            @Result(column = "published_time", property = "publishedTime"),
+            @Result(column = "content_type", property = "contentType")
+    })
+    List<BlogShortViewEntity> queryPublishedBlogList(Integer pageNo) throws Exception;
 
     /**
      * fetch blog detail by id

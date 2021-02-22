@@ -6,6 +6,13 @@ spring:
     name: gateway-server
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods:
+              - GET
+              - POST
       discovery:
         locator:
           enabled: true
@@ -40,5 +47,5 @@ bmjline:
     skip-auth-urls:
       - /admin/user/login
       - /admin/user/logout
-      - /blog/query/published/**
-      - /blog/detail/**
+      - /blog/query/published
+      - /blog/detail/
