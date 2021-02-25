@@ -56,7 +56,7 @@ public interface BlogMapper {
      * @return List<Map<String, Object>>
      * @throws Exception exception
      */
-    @Select("select id, blog_name, blog_descr, published_time, content_type from t_blog where blog_status = '1' order by updated_time desc limit 10 offset 10 * (#{pageNo} - 1)")
+    @Select("select id, blog_name, blog_descr, published_time, content_type from t_blog where blog_status = '1' order by published_time desc limit 10 offset 10 * (#{pageNo} - 1)")
     @Results({
             @Result(column = "id", property = "id"),
             @Result(column = "blog_name", property = "blogName"),
