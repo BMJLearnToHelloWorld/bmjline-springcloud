@@ -64,7 +64,7 @@ public interface BlogMapper {
             @Result(column = "published_time", property = "publishedTime"),
             @Result(column = "content_type", property = "contentType")
     })
-    List<BlogShortViewEntity> queryPublishedBlogList(Integer pageNo) throws Exception;
+    List<BlogShortViewEntity> queryPublishedBlogList(@Param("pageNo") Integer pageNo) throws Exception;
 
     /**
      * fetch blog detail by id
