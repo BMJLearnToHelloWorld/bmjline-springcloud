@@ -1,0 +1,47 @@
+version: '3'           #该docker-compose.yml文件使用的版本是 3
+services:
+  #eureka-server
+  eureka:
+    build: ./eureka-server              #指定Dockerfile文件
+    image: bmjlinecloud/eureka-server:v1              # 镜像名称:版本
+    container_name: bmjlinecloud_eurekaserver
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - "8761:8761"                     #指定端口映射
+
+  #admin-server
+  admin-server:
+    build: ./admin-server
+    image: bmjlinecloud/admin-server:v1
+    container_name: bmjlinecloud_adminserver
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - "8093:8093"
+    links:
+      - "eureka"
+
+  #blog-server
+  blog-server:
+    build: ./blog-server
+    image: bmjlinecloud/blog-server:v1
+    container_name: bmjlinecloud_blogserver
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - "8092:8092"
+    links:
+      - "eureka"
+
+  #gateway-server
+  gateway-server:
+    build: ./gateway-server
+    image: bmjlinecloud/gateway-server:v1
+    container_name: bmjlinecloud_gatewayserver
+    environment:
+      TZ: Asia/Shanghai
+    ports:
+      - "8090:8090"
+    links:
+      - "eureka"
