@@ -4,6 +4,7 @@ import com.bmjline.adminserver.entity.UserInfoEntity;
 import com.bmjline.adminserver.service.UserService;
 import com.bmjline.adminserver.util.BcryptUtil;
 import com.bmjline.adminserver.util.HttpUtil;
+import com.bmjline.adminserver.util.Md5Util;
 import com.bmjline.authserver.exception.TokenAuthenticationException;
 import com.bmjline.authserver.util.JwtUtil;
 import com.bmjline.common.api.CommonResult;
@@ -28,7 +29,7 @@ import java.util.concurrent.TimeUnit;
  * @author bmj
  */
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/admin/user")
 public class UserController {
 
     private final StringRedisTemplate stringRedisTemplate;
@@ -43,10 +44,24 @@ public class UserController {
     @Value("${token.expire}")
     private long tokenExpireHour;
 
-    @PostMapping("/user/login")
+    @PostMapping("/login")
     public CommonResult<Map<String, Object>> userLogin(@RequestBody UserEntity userEntity, HttpServletRequest request) {
         String remoteAddr = HttpUtil.getIpAddr(request);
         Map<String, Object> resultMap = new HashMap<String, Object>(16);
+
+        // 验证图片验证码
+        String captcha = userEntity.getCaptcha();
+        if (captcha == null) {
+            return CommonResult.failed("invalid captcha");
+        }
+        String lowerCaseCaptcha = captcha.toLowerCase();
+        String realKey = Md5Util.encode(lowerCaseCaptcha + userEntity.getKey());
+        String lowerCaseCode = (String) stringRedisTemplate.opsForHash().get(realKey, userEntity.getKey());
+        if (lowerCaseCode == null || !lowerCaseCode.equals(lowerCaseCaptcha)) {
+            return CommonResult.failed("incorrect captcha");
+        }
+
+        // 用户名密码登录
         String userId = userService.getUserIdByUsername(userEntity.getUsername());
         if (StringUtils.isEmpty(userId)) {
             return CommonResult.failed("username wrong, please check!");
@@ -64,7 +79,7 @@ public class UserController {
         return CommonResult.failed("login failed");
     }
 
-    @GetMapping("/user/info")
+    @GetMapping("/info")
     public CommonResult<UserInfoEntity> userLogin(@RequestHeader("X-Token") String xToken) {
         String token = (String) stringRedisTemplate.opsForHash().get(xToken, "token");
         if (StringUtils.isEmpty(token)) {
@@ -84,7 +99,7 @@ public class UserController {
         return CommonResult.success(userInfoEntity);
     }
 
-    @PostMapping("/user/logout")
+    @PostMapping("/logout")
     public CommonResult<String> userLogout(@RequestHeader("X-Token") String xToken) {
         if (stringRedisTemplate.delete(xToken)) {
             return CommonResult.success("delete token success");

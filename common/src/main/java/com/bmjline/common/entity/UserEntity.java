@@ -11,6 +11,8 @@ public class UserEntity implements Serializable {
 
     private String username;
     private String password;
+    private String captcha;
+    private String key;
     private String clientId;
 
     public String getUsername() {
@@ -27,6 +29,22 @@ public class UserEntity implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCaptcha() {
+        return captcha;
+    }
+
+    public void setCaptcha(String captcha) {
+        this.captcha = captcha;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getClientId() {

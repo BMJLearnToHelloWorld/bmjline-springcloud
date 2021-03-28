@@ -1,22 +1,38 @@
 version: '3'           #该docker-compose.yml文件使用的版本是 3
 services:
+  #redis
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    restart: always
+    container_name: bmjlinecloud_redis
+
   #eureka-server
   eureka:
     build: ./eureka-server              #指定Dockerfile文件
+    restart: always
     image: bmjlinecloud/eureka-server:v1              # 镜像名称:版本
     container_name: bmjlinecloud_eurekaserver
     environment:
       TZ: Asia/Shanghai
+    volumes: #挂载数据卷，同步主机与容器的配置文件
+      - /data/bmjline/cloud/eureka-server/config:/config
+      - /data/bmjline/cloud/eureka-server/jar/eureka-server-0.0.1-SNAPSHOT.jar:/app.jar
     ports:
       - "8761:8761"                     #指定端口映射
 
   #admin-server
   admin-server:
     build: ./admin-server
+    restart: always
     image: bmjlinecloud/admin-server:v1
     container_name: bmjlinecloud_adminserver
     environment:
       TZ: Asia/Shanghai
+    volumes:
+      - /data/bmjline/cloud/admin-server/config:/config
+      - /data/bmjline/cloud/admin-server/jar/admin-server-0.0.1-SNAPSHOT.jar:/app.jar
     ports:
       - "8093:8093"
     links:
@@ -25,10 +41,14 @@ services:
   #blog-server
   blog-server:
     build: ./blog-server
+    restart: always
     image: bmjlinecloud/blog-server:v1
     container_name: bmjlinecloud_blogserver
     environment:
       TZ: Asia/Shanghai
+    volumes:
+      - /data/bmjline/cloud/blog-server/config:/config
+      - /data/bmjline/cloud/blog-server/jar/blog-server-0.0.1-SNAPSHOT.jar:/app.jar
     ports:
       - "8092:8092"
     links:
@@ -37,10 +57,14 @@ services:
   #gateway-server
   gateway-server:
     build: ./gateway-server
+    restart: always
     image: bmjlinecloud/gateway-server:v1
     container_name: bmjlinecloud_gatewayserver
     environment:
       TZ: Asia/Shanghai
+    volumes:
+      - /data/bmjline/cloud/gateway-server/config:/config
+      - /data/bmjline/cloud/gateway-server/jar/gateway-server-0.0.1-SNAPSHOT.jar:/app.jar
     ports:
       - "8090:8090"
     links:

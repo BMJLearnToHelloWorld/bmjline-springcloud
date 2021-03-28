@@ -3,6 +3,9 @@ package com.bmjline.ossserver;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * @author bmj
+ */
 @SpringBootApplication
 public class OssServerApplication {
 
