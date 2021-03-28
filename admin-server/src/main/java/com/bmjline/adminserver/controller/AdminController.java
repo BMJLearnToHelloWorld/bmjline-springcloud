@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -44,18 +45,19 @@ public class AdminController {
      */
     @GetMapping(value = "/verifyImage/{key}")
     public CommonResult<String> randomImage(HttpServletResponse response, @PathVariable String key) {
+        // 获取4个字符
+        String code = VerifyCodeUtil.randomString(BASE_CHECK_CODES, 4);
+        String lowerCaseCode = code.toLowerCase();
+        String realKey = Md5Util.encode(lowerCaseCode + key);
+        stringRedisTemplate.opsForHash().put(realKey, key, lowerCaseCode);
+        stringRedisTemplate.expire(realKey, tokenExpireNumber / 6, TimeUnit.HOURS);
+        String base64 = null;
         try {
-            // 获取4个字符
-            String code = VerifyCodeUtil.randomString(BASE_CHECK_CODES, 4);
-            String lowerCaseCode = code.toLowerCase();
-            String realKey = Md5Util.encode(lowerCaseCode + key);
-            stringRedisTemplate.opsForHash().put(realKey, key, lowerCaseCode);
-            stringRedisTemplate.expire(realKey, tokenExpireNumber / 6, TimeUnit.HOURS);
-            String base64 = VerifyImageUtil.generate(code);
-            return CommonResult.success(base64);
-        } catch (Exception e) {
-            return CommonResult.failed("get verify image failed: " + e.getMessage());
+            base64 = VerifyImageUtil.generate(code);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        return CommonResult.success(base64);
     }
 
 }

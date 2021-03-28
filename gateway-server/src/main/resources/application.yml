@@ -41,12 +41,13 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://eureka:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
 
 bmjline:
   jwt:
     skip-auth-urls:
       - /admin/user/login
       - /admin/user/logout
+      - /admin/verifyImage/
       - /blog/query/published
       - /blog/detail/
