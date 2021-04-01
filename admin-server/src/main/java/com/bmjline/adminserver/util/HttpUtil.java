@@ -11,6 +11,10 @@ public class HttpUtil {
 
     private static final String UNKNOWN = "unKnown";
 
+    private HttpUtil() {
+        throw new IllegalStateException("HttpUtil class");
+    }
+
     public static String getIpAddr(HttpServletRequest request) {
         String xip = request.getHeader("X-Real-IP");
         String xFor = request.getHeader("X-Forwarded-For");

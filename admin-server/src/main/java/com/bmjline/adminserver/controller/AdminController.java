@@ -25,13 +25,10 @@ public class AdminController {
 
     private final StringRedisTemplate stringRedisTemplate;
 
-    private final UserService userService;
-
     private static final String BASE_CHECK_CODES = "qwertyuiplkjhgfdsazxcvbnmQWERTYUPLKJHGFDSAZXCVBNM1234567890";
 
     public AdminController(StringRedisTemplate stringRedisTemplate, UserService userService) {
         this.stringRedisTemplate = stringRedisTemplate;
-        this.userService = userService;
     }
 
     @Value("${token.expire}")

@@ -7,8 +7,8 @@ spring:
   datasource:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/bmjline_cloud
-    username: bmj
-    password: bmj.123456
+    username: ??
+    password: ??
     driver-class-name: org.postgresql.Driver
   redis:
     database: 0

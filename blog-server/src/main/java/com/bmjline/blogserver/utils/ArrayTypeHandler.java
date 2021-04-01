@@ -64,13 +64,14 @@ public class ArrayTypeHandler extends BaseTypeHandler<Object[]> {
 
     private Object[] getArray(Array array) {
         if (array == null) {
-            return null;
+            return new Object[0];
         }
         try {
             return (Object[]) array.getArray();
         } catch (Exception e) {
+            e.getStackTrace();
         }
-        return null;
+        return new Object[0];
     }
 
 }

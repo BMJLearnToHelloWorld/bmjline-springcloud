@@ -83,7 +83,7 @@ public class VerifyImageUtil {
         // 转换成base64串
         String base64 = Base64.getEncoder().encodeToString(bytes).trim();
         // 删除 \r\n
-        base64 = base64.replaceAll("\n", "").replaceAll("\r", "");
+        base64 = base64.replace("\n", "").replace("\r", "");
 
         // 写到指定位置
         // ImageIO.write(bufferedImage, "png", new File(""));

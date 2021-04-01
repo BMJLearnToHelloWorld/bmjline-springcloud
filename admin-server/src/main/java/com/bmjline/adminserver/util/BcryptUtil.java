@@ -6,6 +6,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  * @author bmj
  */
 public class BcryptUtil {
+
+    private BcryptUtil() {
+        throw new IllegalStateException("BcryptUtil class");
+    }
+
     /**
      * 对密码进行加密
      *
@@ -31,10 +36,4 @@ public class BcryptUtil {
         return result;
     }
 
-//    public static void main(String[] args) {
-//        String hashPass = encode("2963h5IA7XGK1ezIW4IU2g==");
-//        System.out.println(hashPass);
-//        System.out.println(match("2963h5IA7XGK1ezIW4IU2g==", hashPass));
-//        System.out.println(match("2963h5IA7XGK1ezIW4IU2g==", "$2a$10$JJFqI09wr9O9IECCZAPjHuQqROswx30OXdC/m7OASg6909TD/vzLe"));
-//    }
 }

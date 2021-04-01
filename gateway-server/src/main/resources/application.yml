@@ -26,6 +26,10 @@ spring:
           uri: lb://admin-server
           predicates:
             - Path=/admin/**
+        - id: oss_server
+          uri: lb://oss-server
+          predicates:
+            - Path=/oss/**
   redis:
     database: 0
     host: localhost
