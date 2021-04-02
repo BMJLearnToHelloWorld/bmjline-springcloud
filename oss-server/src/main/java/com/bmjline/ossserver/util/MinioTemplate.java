@@ -13,6 +13,7 @@ import io.minio.errors.ErrorResponseException;
 import io.minio.errors.InsufficientDataException;
 import io.minio.errors.InternalException;
 import io.minio.errors.InvalidResponseException;
+import io.minio.errors.MinioException;
 import io.minio.errors.ServerException;
 import io.minio.errors.XmlParserException;
 import io.minio.messages.Bucket;
@@ -69,7 +70,8 @@ public class MinioTemplate {
      *
      * @param bucket bucket名称
      */
-    public void bucketExists(String bucket) throws IOException, InvalidKeyException, InvalidResponseException, InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, ErrorResponseException {
+    public void bucketExists(String bucket) throws MinioException, NoSuchAlgorithmException, InvalidKeyException,
+            IOException {
         if (!minioClientConfig.minioClient().bucketExists(BucketExistsArgs.builder().bucket(bucket).build())) {
             minioClientConfig.minioClient().makeBucket(MakeBucketArgs.builder()
                     .bucket(bucket)
@@ -88,7 +90,8 @@ public class MinioTemplate {
      * <p>
      * https://docs.minio.io/cn/java-client-api-reference.html#listBuckets
      */
-    public List<Bucket> getAllBuckets() throws Exception {
+    public List<Bucket> getAllBuckets() throws MinioException, NoSuchAlgorithmException, InvalidKeyException,
+            IOException {
         return minioClientConfig.minioClient().listBuckets();
     }
 
@@ -97,7 +100,8 @@ public class MinioTemplate {
      *
      * @param bucket bucket名称
      */
-    public Optional<Bucket> getBucket(String bucket) throws Exception {
+    public Optional<Bucket> getBucket(String bucket) throws MinioException, NoSuchAlgorithmException,
+            InvalidKeyException, IOException {
         return minioClientConfig.minioClient().listBuckets().stream().filter(b -> b.name().equals(bucket)).findFirst();
     }
 
@@ -106,7 +110,8 @@ public class MinioTemplate {
      *
      * @param bucket bucket名称
      */
-    public void removeBucket(String bucket) throws Exception {
+    public void removeBucket(String bucket) throws MinioException, NoSuchAlgorithmException, InvalidKeyException,
+            IOException {
         minioClientConfig.minioClient().removeBucket(RemoveBucketArgs.builder().bucket(bucket).build());
     }
 
@@ -129,9 +134,8 @@ public class MinioTemplate {
      * @param expires    过期时间 <=7
      * @return url
      */
-    public String getObjectUrl(String bucket, String objectName, Integer expires) throws IOException,
-            InvalidKeyException, InvalidResponseException, InsufficientDataException, NoSuchAlgorithmException,
-            ServerException, InternalException, XmlParserException, ErrorResponseException {
+    public String getObjectUrl(String bucket, String objectName, Integer expires) throws MinioException,
+            NoSuchAlgorithmException, InvalidKeyException, IOException {
         return minioClientConfig.minioClient().getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
                 .bucket(bucket)
                 .object(objectName)
@@ -146,9 +150,8 @@ public class MinioTemplate {
      * @param objectName
      * @return url
      */
-    public String getObjectUrl(String bucket, String objectName) throws IOException,
-            InvalidKeyException, InvalidResponseException, InsufficientDataException, NoSuchAlgorithmException,
-            ServerException, InternalException, XmlParserException, ErrorResponseException {
+    public String getObjectUrl(String bucket, String objectName) throws MinioException, NoSuchAlgorithmException,
+            InvalidKeyException, IOException {
         return minioClientConfig.minioClient().getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
                 .bucket(bucket)
                 .object(objectName)
@@ -163,9 +166,8 @@ public class MinioTemplate {
      * @param objectName 文件名称
      * @return InputStream
      */
-    public InputStream getObjectStream(String bucket, String objectName) throws IOException,
-            InvalidKeyException, InvalidResponseException, InsufficientDataException, NoSuchAlgorithmException,
-            ServerException, InternalException, XmlParserException, ErrorResponseException {
+    public InputStream getObjectStream(String bucket, String objectName) throws MinioException,
+            NoSuchAlgorithmException, InvalidKeyException, IOException {
         return minioClientConfig.minioClient().getObject(GetObjectArgs.builder()
                 .bucket(bucket)
                 .object(objectName)
@@ -179,9 +181,8 @@ public class MinioTemplate {
      * @param objectName 文件名称
      * @throws Exception https://docs.minio.io/cn/java-client-api-reference.html#removeObject
      */
-    public void removeObject(String bucket, String objectName) throws IOException,
-            InvalidKeyException, InvalidResponseException, InsufficientDataException, NoSuchAlgorithmException,
-            ServerException, InternalException, XmlParserException, ErrorResponseException {
+    public void removeObject(String bucket, String objectName) throws MinioException, NoSuchAlgorithmException,
+            InvalidKeyException, IOException {
         minioClientConfig.minioClient().removeObject(RemoveObjectArgs.builder()
                 .bucket(bucket)
                 .object(objectName)
