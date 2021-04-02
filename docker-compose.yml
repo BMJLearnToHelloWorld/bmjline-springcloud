@@ -69,3 +69,19 @@ services:
       - "8090:8090"
     links:
       - "eureka"
+
+  #oss-server
+  oss-server:
+    build: ./oss-server
+    restart: always
+    image: bmjlinecloud/oss-server:v1
+    container_name: bmjlinecloud_ossserver
+    environment:
+      TZ: Asia/Shanghai
+    volumes:
+      - /data/bmjline/cloud/oss-server/config:/config
+      - /data/bmjline/cloud/oss-server/jar/oss-server-0.0.1-SNAPSHOT.jar:/app.jar
+    ports:
+      - "8094:8094"
+    links:
+      - "eureka"
