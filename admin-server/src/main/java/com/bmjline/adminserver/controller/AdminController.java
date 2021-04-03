@@ -1,6 +1,5 @@
 package com.bmjline.adminserver.controller;
 
-import com.bmjline.adminserver.service.UserService;
 import com.bmjline.adminserver.util.Md5Util;
 import com.bmjline.adminserver.util.VerifyCodeUtil;
 import com.bmjline.adminserver.util.VerifyImageUtil;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -27,7 +27,7 @@ public class AdminController {
 
     private static final String BASE_CHECK_CODES = "qwertyuiplkjhgfdsazxcvbnmQWERTYUPLKJHGFDSAZXCVBNM1234567890";
 
-    public AdminController(StringRedisTemplate stringRedisTemplate, UserService userService) {
+    public AdminController(StringRedisTemplate stringRedisTemplate) {
         this.stringRedisTemplate = stringRedisTemplate;
     }
 
@@ -51,7 +51,7 @@ public class AdminController {
         String base64 = null;
         try {
             base64 = VerifyImageUtil.generate(code);
-        } catch (IOException e) {
+        } catch (IOException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return CommonResult.success(base64);

@@ -16,6 +16,11 @@ import java.util.Date;
  * @author bmj
  */
 public class JwtUtil {
+
+    private JwtUtil() {
+        throw new IllegalStateException("JwtUtil class");
+    }
+
     public static final long TOKEN_EXPIRE_TIME = 7200 * 1000;
     private static final String ISSUER = "bmjline";
 
@@ -31,14 +36,12 @@ public class JwtUtil {
         Date now = new Date();
         Date expireTime = new Date(now.getTime() + TOKEN_EXPIRE_TIME);
 
-        String token = JWT.create()
+        return JWT.create()
                 .withIssuer(ISSUER)
                 .withIssuedAt(now)
                 .withExpiresAt(expireTime)
                 .withClaim("userId", userId)
                 .sign(algorithm);
-
-        return token;
     }
 
     /**

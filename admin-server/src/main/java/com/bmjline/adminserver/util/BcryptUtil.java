@@ -19,8 +19,7 @@ public class BcryptUtil {
      */
     public static String encode(String password) {
         BCryptPasswordEncoder bcryptPasswordEncoder = new BCryptPasswordEncoder();
-        String hashPass = bcryptPasswordEncoder.encode(password);
-        return hashPass;
+        return bcryptPasswordEncoder.encode(password);
     }
 
     /**
@@ -32,8 +31,7 @@ public class BcryptUtil {
      */
     public static boolean match(String password, String encodedPassword) {
         BCryptPasswordEncoder bcryptPasswordEncoder = new BCryptPasswordEncoder();
-        boolean result = bcryptPasswordEncoder.matches(password, encodedPassword);
-        return result;
+        return bcryptPasswordEncoder.matches(password, encodedPassword);
     }
 
 }

@@ -39,7 +39,7 @@ public class OssController {
      */
     @PostMapping(value = "/upload")
     public CommonResult<String> uploadOne(@RequestParam("obj") MultipartFile obj) {
-        if (null == obj || obj.isEmpty()) {
+        if (null == obj) {
             return CommonResult.failed("上传文件不能为空");
         } else {
             Date now = new Date();
@@ -55,10 +55,14 @@ public class OssController {
                 return CommonResult.failed("check bucket failed: " + e.getMessage());
             }
 
-            String objNameWithUniqueId = obj.getOriginalFilename()
-                    .substring(0, obj.getOriginalFilename().lastIndexOf(".")) +
+            String objOriginalFilename = obj.getOriginalFilename();
+            if (null == objOriginalFilename) {
+                return CommonResult.failed("file name is null, please check!");
+            }
+            String objNameWithUniqueId = objOriginalFilename
+                    .substring(0, objOriginalFilename.lastIndexOf(".")) +
                     UuidUtil.generateUuid() +
-                    obj.getOriginalFilename().substring(obj.getOriginalFilename().lastIndexOf("."));
+                    objOriginalFilename.substring(objOriginalFilename.lastIndexOf("."));
 
             String objPathName = (String.valueOf(month).length() == 1 ? "0" + month : String.valueOf(month))
                     + File.separator + objNameWithUniqueId;

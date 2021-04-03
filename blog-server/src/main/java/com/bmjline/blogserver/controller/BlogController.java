@@ -35,7 +35,7 @@ public class BlogController {
             return CommonResult.success(blogService.queryAllBlog(req));
         } catch (Exception e) {
             e.printStackTrace();
-            return CommonResult.failed("failed to query blog");
+            return CommonResult.failed("failed to query all blog");
         }
     }
 
@@ -45,7 +45,7 @@ public class BlogController {
             return CommonResult.success(blogService.queryConditionedBlog(req));
         } catch (Exception e) {
             e.printStackTrace();
-            return CommonResult.failed("failed to query blog");
+            return CommonResult.failed("failed to query conditioned blog");
         }
     }
 
@@ -55,7 +55,7 @@ public class BlogController {
             return CommonResult.success(blogService.queryPublishedBlog(pageNo));
         } catch (Exception e) {
             e.printStackTrace();
-            return CommonResult.failed("failed to query blog");
+            return CommonResult.failed("failed to query published blog");
         }
     }
 

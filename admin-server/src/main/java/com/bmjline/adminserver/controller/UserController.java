@@ -44,10 +44,12 @@ public class UserController {
     @Value("${token.expire}")
     private long tokenExpireHour;
 
+    private static final String TOKEN = "token";
+
     @PostMapping("/login")
     public CommonResult<Map<String, Object>> userLogin(@RequestBody UserEntity userEntity, HttpServletRequest request) {
         String remoteAddr = HttpUtil.getIpAddr(request);
-        Map<String, Object> resultMap = new HashMap<String, Object>(16);
+        Map<String, Object> resultMap = new HashMap<>(16);
 
         // 验证图片验证码
         String captcha = userEntity.getCaptcha();
@@ -70,9 +72,9 @@ public class UserController {
             String token = JwtUtil.generateToken(userId, userId);
             if (StringUtils.isNotEmpty(token)) {
                 String uuidKey = UuidUtil.generateUuid();
-                stringRedisTemplate.opsForHash().put(uuidKey, "token", token);
+                stringRedisTemplate.opsForHash().put(uuidKey, TOKEN, token);
                 stringRedisTemplate.expire(uuidKey, tokenExpireHour, TimeUnit.HOURS);
-                resultMap.put("token", uuidKey);
+                resultMap.put(TOKEN, uuidKey);
                 return CommonResult.success(resultMap);
             }
         }
@@ -81,7 +83,7 @@ public class UserController {
 
     @GetMapping("/info")
     public CommonResult<UserInfoEntity> userLogin(@RequestHeader("X-Token") String xToken) {
-        String token = (String) stringRedisTemplate.opsForHash().get(xToken, "token");
+        String token = (String) stringRedisTemplate.opsForHash().get(xToken, TOKEN);
         if (StringUtils.isEmpty(token)) {
             return CommonResult.failed("invalid token");
         }
@@ -101,7 +103,7 @@ public class UserController {
 
     @PostMapping("/logout")
     public CommonResult<String> userLogout(@RequestHeader("X-Token") String xToken) {
-        if (stringRedisTemplate.delete(xToken)) {
+        if (Boolean.TRUE.equals(stringRedisTemplate.delete(xToken))) {
             return CommonResult.success("delete token success");
         } else {
             return CommonResult.failed("delete token failed");

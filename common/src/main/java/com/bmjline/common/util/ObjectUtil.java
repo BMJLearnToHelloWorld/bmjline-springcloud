@@ -1,12 +1,18 @@
 package com.bmjline.common.util;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * @author bmj
  */
 public class ObjectUtil {
+
+    private ObjectUtil() {
+        throw new IllegalStateException("ObjectUtil class");
+    }
+
     public static <T> List<T> castList(Object obj, Class<T> clazz) {
         List<T> result = new ArrayList<T>();
         if (obj instanceof List<?>) {
@@ -15,6 +21,6 @@ public class ObjectUtil {
             }
             return result;
         }
-        return null;
+        return Collections.emptyList();
     }
 }

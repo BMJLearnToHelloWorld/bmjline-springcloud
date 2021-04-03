@@ -80,8 +80,6 @@ public class MinioTemplate {
                     .bucket(bucket)
                     .config(prepareBucketPolicy(bucket))
                     .build());
-        } else {
-            System.out.println("Bucket " + bucket + " already exists.");
         }
     }
 

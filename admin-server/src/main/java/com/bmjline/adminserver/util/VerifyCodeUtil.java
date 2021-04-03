@@ -9,6 +9,10 @@ import java.util.concurrent.ThreadLocalRandom;
  */
 public class VerifyCodeUtil {
 
+    private VerifyCodeUtil() {
+        throw new IllegalStateException("VerifyCodeUtil class");
+    }
+
     public static String randomString(String baseString, int length) {
         if (StringUtils.isEmpty(baseString)) {
             return "";

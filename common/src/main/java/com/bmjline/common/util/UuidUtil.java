@@ -7,6 +7,10 @@ import java.util.UUID;
  */
 public class UuidUtil {
 
+    private UuidUtil() {
+        throw new IllegalStateException("UuidUtil class");
+    }
+
     public static String generateUuid() {
         return UUID.randomUUID().toString().replace("-", "");
     }
