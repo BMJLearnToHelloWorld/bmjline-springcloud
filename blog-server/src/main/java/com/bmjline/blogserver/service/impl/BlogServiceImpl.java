@@ -49,8 +49,8 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public void newBlog(Map<String, Object> params) throws Exception {
-        createBlog(params);
+    public String newBlog(Map<String, Object> params) throws Exception {
+        return createBlog(params);
     }
 
     private String createBlog(Map<String, Object> params) throws Exception {
@@ -70,7 +70,7 @@ public class BlogServiceImpl implements BlogService {
     private void saveBlog(Map<String, Object> params) throws Exception {
         String blogId = params.get("id") == null ? "" : params.get("id").toString();
         if (blogId.isEmpty()) {
-            throw new Exception("blogId is empty, please check!");
+            throw new IllegalArgumentException("blogId is empty, please check!");
         }
         blogMapper.updateBlog(params);
         blogMapper.deleteBlogTagById(blogId);

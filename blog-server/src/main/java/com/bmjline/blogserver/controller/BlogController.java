@@ -72,8 +72,8 @@ public class BlogController {
     @PostMapping("/new")
     public CommonResult<String> newBlog(@RequestBody Map<String, Object> req) {
         try {
-            blogService.newBlog(req);
-            return CommonResult.success("success to save blog");
+            String newBlogId = blogService.newBlog(req);
+            return CommonResult.success(newBlogId);
         } catch (Exception e) {
             e.printStackTrace();
             return CommonResult.failed("failed to save blog");

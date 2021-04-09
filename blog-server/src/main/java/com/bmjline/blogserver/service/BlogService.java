@@ -50,9 +50,10 @@ public interface BlogService {
      * new blog
      *
      * @param req req
+     * @return String
      * @throws Exception exception
      */
-    void newBlog(Map<String, Object> req) throws Exception;
+    String newBlog(Map<String, Object> req) throws Exception;
 
     /**
      * update blog
