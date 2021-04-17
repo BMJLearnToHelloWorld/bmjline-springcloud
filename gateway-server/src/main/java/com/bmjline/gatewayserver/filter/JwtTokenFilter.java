@@ -106,7 +106,7 @@ public class JwtTokenFilter implements GlobalFilter, Ordered {
      */
     private Mono<Void> authErrorResponse(ServerHttpResponse response, String message) {
         response.setStatusCode(HttpStatus.UNAUTHORIZED);
-        byte[] responseByte = JSON.toJSON(CommonResult.failed(message)).toString().getBytes(StandardCharsets.UTF_8);
+        byte[] responseByte = JSON.toJSON(CommonResult.unauthorized(message)).toString().getBytes(StandardCharsets.UTF_8);
         DataBuffer buffer = response.bufferFactory().wrap(responseByte);
         return response.writeWith(Flux.just(buffer));
     }
